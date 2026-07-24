@@ -1,0 +1,118 @@
+PREPAI
+AI-Powered Mock Interview Platform
+Product Requirements Document  |  Version 1.0  |  10-Day Capstone Project
+1. Overview
+Product Name:  PrepAI (working title)
+Document Version:  1.0
+Prepared For:  AB Talks 60-Day Claude AI Challenge — Capstone Project
+Timeline:  10 days (Day 1: Discovery & Planning, Days 2–10: Build & Deploy)
+Daily Time Budget:  3–4 hours/day
+PrepAI is a full-stack web application that lets users practice technical mock interviews in Java, Data Structures & Algorithms (DSA), and Web Development. The platform generates interview questions using an AI model, accepts user answers, and returns AI-generated feedback including a score, strengths, weaknesses, and one practical improvement suggestion. Users can track their progress over time through a performance dashboard and interview history.
+2. Problem Statement
+Job seekers preparing for technical interviews often lack access to realistic, low-pressure practice environments. Common alternatives — practicing alone, using static question banks, or scheduling mock interviews with peers — are either unstructured, hard to schedule, or provide no objective feedback. Aspiring developers need a way to practice answering real interview-style questions and receive immediate, structured feedback on their performance, without the cost or logistics of a real mock interviewer.
+3. Target Users
+•	Computer science students preparing for campus placements or internships.
+•	Self-taught and bootcamp developers preparing for their first technical role.
+•	Working developers preparing for job switches, brushing up on DSA or Java fundamentals.
+•	Anyone who wants low-stakes, repeatable interview practice without scheduling a human interviewer.
+4. Goals & Objectives
+4.1 Product Goals
+•	Let users practice realistic, domain-specific interview questions on demand.
+•	Provide structured, actionable AI feedback after every answer.
+•	Let users track their improvement over time via history and scores.
+4.2 Personal / Learning Goals
+•	Gain hands-on, resume-ready experience with Java + Spring Boot backend development.
+•	Learn to build a React frontend from a beginner starting point.
+•	Learn to design and connect a relational database (PostgreSQL) to a real application.
+•	Learn to integrate a third-party AI API into a backend service.
+•	Learn the full software development lifecycle: requirements → design → build → test → deploy.
+5. Scope
+5.1 In Scope — v1.0
+•	User registration and login (authentication).
+•	Domain selection: Java, DSA, Web Development.
+•	AI-generated interview questions per domain.
+•	Text-based answer submission.
+•	AI-generated feedback: score, strengths, weaknesses, one improvement tip.
+•	Performance dashboard (scores, trends over time).
+•	Interview history (past sessions, questions, answers, feedback).
+•	Responsive UI usable on desktop and mobile browsers.
+•	Deployment of a working, publicly accessible v1.0.
+5.2 Out of Scope — v1.0 (Explicitly Excluded)
+•	Video-based interviews or webcam recording.
+•	Voice recognition / spoken answers.
+•	Payment gateway or subscription billing.
+•	Real-time multiplayer or peer-to-peer interviews.
+•	Native mobile app (iOS/Android).
+•	Admin panel / content moderation tools.
+•	Social features (sharing, leaderboards, following other users).
+Rationale: these features add significant technical complexity (media handling, real-time infrastructure, payment compliance, native app builds) that would consume time needed for a polished, fully working core product within the 10-day, 3–4 hour/day budget. They are captured in Section 10 (Future Scope) for consideration after v1.0.
+6. Core Features & Functional Requirements
+6.1 Authentication
+•	Users can register with name, email, and password.
+•	Users can log in and log out.
+•	Passwords are stored securely (hashed, never plain text).
+•	Sessions are managed via JWT (JSON Web Token).
+6.2 Domain Selection
+•	User selects one of three domains before starting an interview: Java, DSA, Web Development.
+•	Each domain maps to a distinct AI prompt template used to generate relevant questions.
+6.3 Mock Interview Module
+•	User starts a new interview session tied to a domain and their account.
+•	System requests a question from the AI service based on the selected domain.
+•	A fixed number of questions per session (recommended: 5) keeps sessions short and testable.
+•	User submits a free-text answer for each question.
+6.4 AI Feedback & Scoring
+•	After each answer submission, the backend sends the question and answer to the AI service.
+•	AI returns: a numeric score (e.g., out of 10), 1–2 strengths, 1–2 weaknesses, and one improvement suggestion.
+•	Feedback is shown to the user immediately after submission.
+•	An overall session score is calculated as the average of all question scores.
+6.5 Dashboard
+•	Displays total interviews completed, average score, and score trend across domains.
+•	Simple visual summary (e.g., bar or line indicators) of performance over time.
+6.6 Interview History
+•	Lists all past interview sessions with date, domain, and overall score.
+•	User can open a past session to review each question, their answer, and the AI feedback given.
+6.7 Responsive UI
+•	All core screens (login, domain select, interview, feedback, dashboard, history) work on both desktop and mobile browser widths.
+ 
+7. Non-Functional Requirements
+Category	Requirement
+Performance	AI question/feedback responses should return within 5–10 seconds under normal free-tier API conditions.
+Security	Passwords hashed (BCrypt); JWT-based auth; no sensitive data in AI prompts.
+Reliability	Graceful error handling if the AI API is slow, rate-limited, or unavailable.
+Usability	Simple, distraction-free UI; clear feedback states (loading, success, error).
+Maintainability	Clean, layered Spring Boot architecture (Controller → Service → Repository).
+Portability	Runs locally via Docker/local Postgres and deploys to a free-tier cloud host.
+8. Tech Stack
+Layer	Technology	Notes
+Frontend	React (JavaScript)	Component-based UI; beginner-paced learning across Days 4–6.
+Backend	Java + Spring Boot	REST API; layered architecture; primary skill-building focus.
+Database	PostgreSQL	Relational DB via Spring Data JPA; industry-standard.
+AI Service	Google Gemini API (free tier)	Question generation and answer feedback via REST calls.
+Auth	Spring Security + JWT	Stateless token-based authentication.
+Version Control	Git + GitHub	Feature-based commits; user is already comfortable with this.
+Deployment	Free-tier cloud hosting (guided on Day 8–9)	Exact platform selected during deployment planning.
+9. Success Criteria — Day 10 Definition of Done
+•	A new user can create an account and log in.
+•	A logged-in user can select a domain and start a mock interview.
+•	The user can answer AI-generated questions within a session.
+•	The user receives AI feedback (score, strengths, weaknesses, improvement tip) per answer.
+•	The user can view a performance dashboard summarizing their results.
+•	The user can view their full interview history, including past questions and feedback.
+•	The application is deployed and publicly accessible via a live URL.
+•	The application works end-to-end without critical bugs during a full demo walkthrough.
+10. Future Scope (Post-v1.0, Not Built in This Capstone)
+•	Voice-based answer submission with speech-to-text.
+•	Video mock interviews with recording/playback.
+•	More interview domains (System Design, Behavioral, Python, etc.).
+•	Peer-to-peer or real-time mock interviews.
+•	Native mobile apps.
+•	Subscription/payment tiers for advanced features.
+•	Admin dashboard for managing question banks and users.
+11. Risks & Assumptions
+Risk / Assumption	Mitigation
+Free-tier AI API rate limits may be hit during testing/demo.	Cache/limit test calls; keep session length small (5 questions); add basic retry/error handling.
+First-time React and Spring Boot use may slow initial days.	Extra buffer built into Days 2–6; beginner-paced, step-by-step guidance.
+Deployment platform unfamiliarity.	Dedicated, fully guided deployment day (Day 8) with step-by-step instructions.
+Scope creep from feature ideas mid-build.	Locked v1.0 scope in this PRD; new ideas go into Future Scope (Section 10).
+12. Document Control
+This PRD is the single source of truth for v1.0 scope. Any scope changes during the 10-day build should be reflected here and communicated before implementation continues.
