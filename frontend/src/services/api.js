@@ -1,9 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "https://prepai-backend-cas5.onrender.com/api",
 });
-
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("prepai_token");
   if (token) {
