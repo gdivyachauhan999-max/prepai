@@ -29,53 +29,64 @@ function Register() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "80px auto", padding: "24px" }}>
-      <h1>PrepAI</h1>
-      <h2>Register</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>Registered successfully! Redirecting to login...</p>}
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "12px" }}>
-          <label>Name</label>
-          <br />
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
+    <div className="page page-center">
+      <div className="card page-narrow" style={{ width: "100%" }}>
+        <div style={{ textAlign: "center", marginBottom: "var(--space-6)" }}>
+          <div style={{ fontSize: "24px", fontWeight: 700, marginBottom: "4px" }}>PrepAI</div>
+          <p style={{ margin: 0, fontSize: "14px" }}>Create your account to start practicing.</p>
         </div>
-        <div style={{ marginBottom: "12px" }}>
-          <label>Email</label>
-          <br />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "12px" }}>
-          <label>Password (min 8 characters)</label>
-          <br />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={8}
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <button type="submit" disabled={loading} style={{ padding: "10px 20px" }}>
-          {loading ? "Registering..." : "Register"}
-        </button>
-      </form>
-      <p>
-        Already have an account? <Link to="/login">Log In</Link>
-      </p>
+
+        {error && <div className="alert alert-error">{error}</div>}
+        {success && <div className="alert alert-success">Registered! Redirecting to login...</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="field">
+            <label htmlFor="name">Name</label>
+            <input
+              id="name"
+              type="text"
+              className="input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your full name"
+              required
+              autoFocus
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              className="input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              className="input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="At least 8 characters"
+              required
+              minLength={8}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={loading}>
+            {loading ? <span className="spinner" /> : "Register"}
+          </button>
+        </form>
+
+        <p style={{ textAlign: "center", marginTop: "var(--space-5)", marginBottom: 0, fontSize: "14px" }}>
+          Already have an account? <Link to="/login">Log In</Link>
+        </p>
+      </div>
     </div>
   );
 }

@@ -30,40 +30,50 @@ function Login() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "80px auto", padding: "24px" }}>
-      <h1>PrepAI</h1>
-      <h2>Log In</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "12px" }}>
-          <label>Email</label>
-          <br />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
+    <div className="page page-center">
+      <div className="card page-narrow" style={{ width: "100%" }}>
+        <div style={{ textAlign: "center", marginBottom: "var(--space-6)" }}>
+          <div style={{ fontSize: "24px", fontWeight: 700, marginBottom: "4px" }}>PrepAI</div>
+          <p style={{ margin: 0, fontSize: "14px" }}>Welcome back. Let's keep practicing.</p>
         </div>
-        <div style={{ marginBottom: "12px" }}>
-          <label>Password</label>
-          <br />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <button type="submit" disabled={loading} style={{ padding: "10px 20px" }}>
-          {loading ? "Logging in..." : "Log In"}
-        </button>
-      </form>
-      <p>
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
+
+        {error && <div className="alert alert-error">{error}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="field">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              className="input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              required
+              autoFocus
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              className="input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={loading}>
+            {loading ? <span className="spinner" /> : "Log In"}
+          </button>
+        </form>
+
+        <p style={{ textAlign: "center", marginTop: "var(--space-5)", marginBottom: 0, fontSize: "14px" }}>
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+      </div>
     </div>
   );
 }
