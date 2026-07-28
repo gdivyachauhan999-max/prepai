@@ -67,6 +67,9 @@ public class InterviewService {
         }
 
         List<Question> questions = questionRepository.findByInterviewOrderByOrderIndexAsc(interview);
+        if (questions.isEmpty()) {
+            throw new ApiException("No questions found for this interview", HttpStatus.NOT_FOUND);
+        }
         Question latest = questions.get(questions.size() - 1);
 
         return new QuestionResponse(latest.getId(), latest.getQuestionText(), latest.getOrderIndex());
@@ -91,11 +94,19 @@ public class InterviewService {
             throw new ApiException("This question has already been answered", HttpStatus.BAD_REQUEST);
         }
 
-        Answer answer = new Answer(question, request.getAnswerText());
+        String trimmedAnswer = request.getAnswerText() == null ? "" : request.getAnswerText().trim();
+        if (trimmedAnswer.isEmpty()) {
+            throw new ApiException("Answer cannot be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (trimmedAnswer.length() > 5000) {
+            throw new ApiException("Answer is too long (max 5000 characters)", HttpStatus.BAD_REQUEST);
+        }
+
+        Answer answer = new Answer(question, trimmedAnswer);
         answerRepository.save(answer);
 
         GeminiService.GeneratedFeedback generated = geminiService.generateFeedback(
-                question.getQuestionText(), request.getAnswerText()
+                question.getQuestionText(), trimmedAnswer
         );
 
         Feedback feedback = new Feedback(answer, generated.score, generated.strengths,
@@ -181,18 +192,28 @@ public class InterviewService {
     @Transactional(readOnly = true)
     public DashboardSummaryResponse getDashboardSummary(String userEmail) {
         User user = getUser(userEmail);
-        List<Interview> completed = interviewRepository.findByUserOrderByStartedAtDesc(user)
-                .stream().filter(i -> "COMPLETED".equals(i.getStatus())).collect(Collectors.toList());
 
-        long total = completed.size();
+        // Only include completed interviews that actually have a valid score.
+        // Defensive filter: protects against any COMPLETED row that somehow has a null score.
+        List<Interview> scored = interviewRepository.findByUserOrderByStartedAtDesc(user)
+                .stream()
+                .filter(i -> "COMPLETED".equals(i.getStatus()) && i.getOverallScore() != null)
+                .collect(Collectors.toList());
 
-        Double average = completed.isEmpty() ? null : completed.stream()
-                .mapToDouble(i -> i.getOverallScore().doubleValue())
-                .average().orElse(0.0);
+        long total = scored.size();
 
-        Map<String, Double> byDomain = completed.stream()
-                .collect(Collectors.groupingBy(Interview::getDomain,
-                        Collectors.averagingDouble(i -> i.getOverallScore().doubleValue())));
+        Double average = scored.isEmpty()
+                ? null
+                : scored.stream()
+                    .mapToDouble(i -> i.getOverallScore().doubleValue())
+                    .average()
+                    .orElse(0.0);
+
+        Map<String, Double> byDomain = scored.stream()
+                .collect(Collectors.groupingBy(
+                        Interview::getDomain,
+                        Collectors.averagingDouble(i -> i.getOverallScore().doubleValue())
+                ));
 
         return new DashboardSummaryResponse(total, average, byDomain);
     }

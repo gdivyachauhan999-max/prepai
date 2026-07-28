@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
@@ -10,6 +10,8 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [searchParams] = useSearchParams();
+  const expired = searchParams.get("expired") === "true";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +39,9 @@ function Login() {
           <p style={{ margin: 0, fontSize: "14px" }}>Welcome back. Let's keep practicing.</p>
         </div>
 
+        {expired && (
+          <div className="alert alert-error">Your session expired. Please log in again.</div>
+        )}
         {error && <div className="alert alert-error">{error}</div>}
 
         <form onSubmit={handleSubmit}>
