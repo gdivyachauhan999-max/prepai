@@ -11,9 +11,13 @@
 	<groupId>com.prepai</groupId>
 	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
-	<url/>
+	<name>PrepAI Backend</name>
+
+<description>
+AI-powered mock interview platform backend built with Spring Boot.
+</description>
+
+<url>https://github.com/gdivyachauhan999-max/prepai</url>
 	<licenses>
 		<license/>
 	</licenses>
