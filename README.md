@@ -1,5 +1,10 @@
 # PrepAI
 
+![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-Java-green?logo=springboot)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 **AI-powered mock interview practice — get real interview questions and instant, structured feedback on your answers, powered by Google Gemini.**
 
 Practicing technical interviews alone is hard: static question banks don't tell you what you got wrong, and scheduling a human mock interviewer is a hassle. PrepAI solves this by generating fresh, domain-specific interview questions and giving you AI-scored feedback (strengths, weaknesses, and a concrete improvement tip) after every answer — so you can practice on your own schedule and actually improve.
@@ -11,13 +16,13 @@ Practicing technical interviews alone is hard: static question banks don't tell 
 
 ## Screenshots
 
-| Login | Dashboard |
-|---|---|
+| Login                                | Dashboard                                    |
+| ------------------------------------ | -------------------------------------------- |
 | ![Login](Docs/screenshots/login.png) | ![Dashboard](Docs/screenshots/dashboard.png) |
 
-| Choose a Domain | Interview History |
-|---|---|
-| ![Domain Select]Docs/screenshots/domain-select.png) | ![History](Docs/screenshots/history.png) |
+| Choose a Domain                                      | Interview History                        |
+| ---------------------------------------------------- | ---------------------------------------- |
+| ![Domain Select](Docs/screenshots/domain-select.png) | ![History](Docs/screenshots/history.png) |
 
 ---
 
@@ -32,14 +37,14 @@ Practicing technical interviews alone is hard: static question banks don't tell 
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React (Vite), React Router, Axios |
-| Backend | Java 17, Spring Boot 3, Spring Security, Spring Data JPA |
-| Database | PostgreSQL |
-| AI | Google Gemini API (free tier) |
-| Auth | JWT (stateless) |
-| Hosting | Netlify (frontend) · Render (backend + database) |
+| Layer    | Technology                                               |
+| -------- | -------------------------------------------------------- |
+| Frontend | React (Vite), React Router, Axios                        |
+| Backend  | Java 17, Spring Boot 3, Spring Security, Spring Data JPA |
+| Database | PostgreSQL                                               |
+| AI       | Google Gemini API (free tier)                            |
+| Auth     | JWT (stateless)                                          |
+| Hosting  | Netlify (frontend) · Render (backend + database)         |
 
 ## Architecture
 
@@ -52,9 +57,11 @@ React (Netlify) → Spring Boot REST API (Render) → PostgreSQL (Render)
 ## Getting Started Locally
 
 ### Prerequisites
+
 - Java 17+, Node.js 18+, PostgreSQL, a free [Google Gemini API key](https://aistudio.google.com/app/apikey)
 
 ### Backend
+
 ```bash
 cd backend
 # Create backend/src/main/resources/application-local.properties
@@ -63,6 +70,7 @@ mvn spring-boot:run "-Dspring-boot.run.profiles=local"
 ```
 
 ### Frontend
+
 ```bash
 cd frontend
 npm install
@@ -93,6 +101,14 @@ Built in a structured 10-day sprint as the capstone for the **AB Talks 60-Day Cl
 
 MIT License
 
+## Portfolio Highlights
+
+- Built a complete full-stack AI application from scratch.
+- Designed secure JWT authentication with Spring Security.
+- Integrated Google Gemini API for dynamic interview generation and AI feedback.
+- Deployed production-ready frontend and backend.
+- Followed a complete Software Development Lifecycle (SDLC) from planning to deployment.
+
 ## Credits
 
-Built by Divya Chauhan with [Claude](https://claude.ai) (free tier) as an AI pair programmer, as part of the [AB Talks](https://www.abtalks.in/) 60-Day Claude AI Challenge.
+Built by Divya Chauhan with [Claude](https://claude.ai) (free tier) as an AI pair programmer, as part of the [AB Talks](https://www.abtalks.in/) 60-Day Claude AI Challenge.- 🌐 Deployed on Netlify + Render for real-world production experience
